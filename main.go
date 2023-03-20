@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/rs/xid"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/rs/xid"
 )
 
 var recipes []Recipe
@@ -13,6 +14,11 @@ func init() {
 	recipes = make([]Recipe, 0)
 }
 
+type Chef struct {
+	Name              string `json:"name"`
+	Country           string `json:"country"`
+	YearsOfExperience int    `json:"yearsOfExperience"`
+}
 type Recipe struct {
 	Id           string    `json:"id"`
 	Name         string    `json:"name"`
@@ -20,6 +26,7 @@ type Recipe struct {
 	Ingredients  []string  `json:"ingredients"`
 	Instructions []string  `json:"instructions"`
 	PublishedAt  time.Time `json:"publishedAt"`
+	Chef         Chef      `json:"chef"`
 }
 
 func DeleteRecipeHandler(c *gin.Context) {
@@ -89,6 +96,13 @@ func NewRecipeHandler(c *gin.Context) {
 	if err := c.ShouldBindJSON(&recipe); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
+		})
+		return
+	}
+
+	if recipe.Chef.Name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": "Chef name is required",
 		})
 		return
 	}
