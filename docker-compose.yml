@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  alt-sch-recipe:
+    build: .
+    container_name: alt-sch-recipe
+    volumes:
+      - .:/app
+    ports: 
+      - "8080:8080"
+    networks:
+      - alt-sch-recipe-network
+  
+  # mysql:
+  #   image: mysql:lastest
+  #   container_name: alt-sch-recipe-mysql
+  #   restart: unless-stopped
+  #   tty: true
+  #   ports:
+  #     - "3306:3306"
+  #   volumes:
+  #     - ./mysql:/var/lib/mysql
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root
+  #     MYSQL_DATABASE: alt-sch-recipe
+  #     MYSQL_USER: alt-sch-recipe
+  #     MYSQL_PASSWORD: alt-sch-recipe
+  #   networks:
+  #     - alt-sch-recipe-network
+
+
+
+networks:
+  alt-sch-recipe-network:
+    driver: bridge
+    # external: true
