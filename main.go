@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -19,6 +20,7 @@ func init() {
 type Recipe struct {
 	Id           string    `json:"id"`
 	Name         string    `json:"name"`
+	ChefName     string    `json:"chef name"`
 	Keywords     []string  `json:"keywords"`
 	Ingredients  []string  `json:"ingredients"`
 	Instructions []string  `json:"instructions"`
@@ -114,6 +116,29 @@ func NewRecipeHandler(c *gin.Context) {
 	if err := c.ShouldBindJSON(&recipe); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
 			"error": err.Error(),
+		})
+		return
+	}
+
+	chefName := recipe.ChefName
+	/*
+		bool value that reads false if the chefs name is not found
+		in database and true if found
+	*/
+	isChefNameFound := false
+
+	// search for chefs name in our database
+	for _, v := range chefs {
+		if v.Name == chefName {
+			isChefNameFound = true
+		}
+	}
+
+	// return error if the chef's name is not in our database
+	if isChefNameFound == false {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"error": fmt.Sprintf(
+				"No chef with the name %s found, please create chef before adding recipe", chefName),
 		})
 		return
 	}

@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "2ab2f5e2-8acb-422d-990e-d63b91c761a0",
+		"name": "golang recipe api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21426120"
+	},
+	"item": [
+		{
+			"name": "recipe",
+			"item": [
+				{
+					"name": "list recipe",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8080/recipes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new recipes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{$randomFullName}}\",\r\n    \"keywords\":[\r\n        \"{{$randomWords}}\", \r\n        \"{{$randomWord}}\"],\r\n    \"ingredients\":[\r\n        \"{{$randomWords}}\", \r\n        \"{{$randomWord}}\"\r\n        ],\r\n    \"instructions\":\"{{$randomWords}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/recipes",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"recipes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update recipe",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"{{$randomFirstName}}\",\r\n    \"keywords\":[\r\n        \"{{$randomWord}}\"],\r\n    \"ingredients\":[\r\n        \"{{$randomWords}}\"],\r\n    \"instructions\":\"{{$randomLoremSentence}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/recipes/cfunruk79sbk074mdj10",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"recipes",
+								"cfunruk79sbk074mdj10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "chef",
+			"item": [
+				{
+					"name": "create chef",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomUserName}}\",\r\n    \"country\": \"{{$randomCountry}}\",\r\n    \"years of experience\": {{$randomInt}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8080/chefs",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8080",
+							"path": [
+								"chefs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
