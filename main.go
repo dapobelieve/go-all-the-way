@@ -16,10 +16,17 @@ func init() {
 type Recipe struct {
 	Id           string    `json:"id"`
 	Name         string    `json:"name"`
+	Chef         Chef      `json:"chef"`
 	Keywords     []string  `json:"keywords"`
 	Ingredients  []string  `json:"ingredients"`
 	Instructions []string  `json:"instructions"`
 	PublishedAt  time.Time `json:"publishedAt"`
+}
+
+type Chef struct {
+	Name              string `json:"name"`
+	Country           string `json:"country"`
+	YearsOfExperience string `json:"yearsOfExperience"`
 }
 
 func DeleteRecipeHandler(c *gin.Context) {
@@ -92,7 +99,10 @@ func NewRecipeHandler(c *gin.Context) {
 		})
 		return
 	}
-
+	if recipe.Chef.Name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Recipe must have a Chef name"})
+		return
+	}
 	recipe.Id = xid.New().String()
 	recipe.PublishedAt = time.Now()
 	recipes = append(recipes, recipe)
